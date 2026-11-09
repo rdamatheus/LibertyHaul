@@ -4,6 +4,9 @@
   const body = document.body;
   const page = body.dataset.page || 'home';
   const root = body.dataset.root || '';
+  const DATA_API = 'https://xtlubocepsbqanrjabog.supabase.co';
+  const PUBLISHABLE_KEY = 'sb_publishable_nCf37VOBL3JpxzL-SxNXxQ_VuxlKyAV';
+  const IMG_BASE = DATA_API + '/storage/v1/object/public/liberty-product-images/';
 
   const menu = document.querySelector('.menu-toggle');
   const nav = document.querySelector('#primary-nav');
@@ -43,6 +46,7 @@
     if (typeof value !== 'string') return null;
     // Aceita imagens locais relativas para impedir a inclusão inadvertida
     // de pixels de rastreamento externos na vitrine inicial.
+    if (value.startsWith(IMG_BASE) && /^[a-zA-Z0-9_-]+\.(jpg|jpeg|png|webp)$/.test(value.slice(IMG_BASE.length))) return value;
     if (!/^assets\/media\/[a-z0-9_.-]+\.(jpg|jpeg|png|webp|svg)$/i.test(value)) return null;
     return root + value;
   }
@@ -155,9 +159,18 @@
     empty.hidden = count > 0;
   }
 
-  // Data exists locally in the repository, with no back-end or authentication.
-  fetch(root + 'data/content.json', { cache: 'no-store' })
-    .then(response => { if (!response.ok) throw new Error('Falha no catálogo'); return response.json(); })
+  // A vitrine lê produtos publicados do banco; lives legadas continuam no conteúdo estático.
+  const contentRequest = page === 'achadinhos'
+    ? fetch(DATA_API + '/rest/v1/liberty_products?select=id,title,description,category,platform,affiliate_url,image_path,published&published=eq.true&order=created_at.desc',
+        {headers:{apikey:PUBLISHABLE_KEY},cache:'no-store'})
+        .then(response => {if(!response.ok) throw new Error('Falha no catálogo'); return response.json();})
+        .then(items => ({items:items.map(item => Object.assign({},item,{
+          image:item.image_path && /^[a-zA-Z0-9_-]+\.(jpg|jpeg|png|webp)$/.test(item.image_path)
+            ? IMG_BASE + encodeURIComponent(item.image_path) : null
+        }))}))
+    : fetch(root + 'data/content.json', { cache: 'no-store' })
+        .then(response => { if (!response.ok) throw new Error('Falha nas lives'); return response.json(); });
+  contentRequest
     .then(data => {
       if (page === 'achadinhos') initCatalog(Array.isArray(data.items) ? data.items : []);
       if (page === 'lives') initLives(Array.isArray(data.lives) ? data.lives : []);

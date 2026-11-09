@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="theme-color" content="#101a2a">
+  <title>Administração | Liberty Haul</title>
+  <link rel="icon" href="../assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./admin.css">
+  <script src="./admin.js" defer></script>
+</head>
+<body>
+<header class="topbar">
+  <a href="../" class="brand"><img src="../assets/icons/liberty-mark-light.svg" alt="" width="34" height="34"><span>LIBERTY <small>HAUL</small></span></a>
+  <a href="../achadinhos/" class="public-link">Ver vitrine pública ↗</a>
+</header>
+<main class="shell">
+  <div class="heading">
+    <div><p class="eyebrow">Área restrita</p><h1>Administração da Liberty Haul</h1><p>Cadastro e publicação dos achadinhos da Isabelle.</p></div>
+    <button id="logout" type="button" class="outline" hidden>Sair</button>
+  </div>
+  <p id="notice" role="status" aria-live="polite" class="notice" hidden></p>
+  <section id="login-panel" class="panel login-panel" aria-labelledby="login-title">
+    <h2 id="login-title">Acessar administração</h2>
+    <p>Use a conta autorizada no Supabase. O acesso é restrito aos administradores da Liberty Haul.</p>
+    <form id="login-form">
+      <label for="login-email">E-mail</label>
+      <input id="login-email" name="email" type="email" autocomplete="username" required placeholder="E-mail autorizado">
+      <label for="login-password">Senha</label>
+      <input id="login-password" name="password" type="password" autocomplete="current-password" required>
+      <button type="submit" id="login-button">Entrar</button>
+    </form>
+  </section>
+  <section id="workspace" hidden>
+    <div class="overview">
+      <div class="metric"><span>Total de produtos</span><strong id="total-products">0</strong></div>
+      <div class="metric"><span>Publicados</span><strong id="published-products">0</strong></div>
+      <div class="metric"><span>Rascunhos</span><strong id="draft-products">0</strong></div>
+    </div>
+    <div class="columns">
+      <section class="panel" aria-labelledby="editor-title">
+        <div class="panel-heading"><h2 id="editor-title">Novo produto</h2><button id="cancel-edit" type="button" class="outline" hidden>Cancelar edição</button></div>
+        <form id="product-form">
+          <label for="title">Nome do produto</label>
+          <input id="title" name="title" maxlength="180" minlength="2" required placeholder="Ex.: Organizador de gavetas">
+          <label for="description">Descrição</label>
+          <textarea id="description" name="description" rows="3" maxlength="1600" placeholder="Por que a Isabelle recomenda?"></textarea>
+          <div class="two-fields">
+            <div><label for="category">Categoria</label><select id="category" name="category" required><option value="beleza">Beleza</option><option value="casa">Casa</option><option value="tech">Tecnologia</option><option value="estilo">Estilo</option></select></div>
+            <div><label for="platform">Marketplace</label><select id="platform" name="platform" required><option value="Shopee">Shopee</option><option value="Mercado Livre">Mercado Livre</option><option value="Amazon">Amazon</option><option value="Outra plataforma">Outra plataforma</option></select></div>
+          </div>
+          <label for="affiliate-url">Link de afiliado (HTTPS)</label>
+          <input id="affiliate-url" name="affiliate_url" type="url" required pattern="https://.*" placeholder="https://...">
+          <label for="photo">Foto do produto (JPEG, PNG ou WebP; até 5 MB)</label>
+          <input id="photo" name="photo" type="file" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp">
+          <p id="photo-current" class="hint"></p>
+          <label class="check"><input id="published" name="published" type="checkbox"><span>Publicado na vitrine</span></label>
+          <label class="check"><input id="live-featured" name="live_featured" type="checkbox"><span>Identificar como produto de live</span></label>
+          <button type="submit" id="save-product">Salvar produto</button>
+          <p class="hint">Rascunhos não aparecem para visitantes. Confira o link de afiliado antes de publicar.</p>
+        </form>
+      </section>
+      <section class="panel catalog-panel" aria-labelledby="list-title">
+        <div class="panel-heading"><h2 id="list-title">Produtos cadastrados</h2><button id="reload-products" class="outline" type="button">Atualizar</button></div>
+        <label class="sr-only" for="filter-products">Buscar produtos cadastrados</label>
+        <input id="filter-products" type="search" placeholder="Buscar no catálogo" autocomplete="off">
+        <div id="product-list" class="product-list"></div>
+        <p id="product-empty" class="empty">Nenhum produto cadastrado ainda.</p>
+      </section>
+    </div>
+  </section>
+  <footer>Liberty Haul · administração privada · <a href="../transparencia/">Transparência sobre afiliados</a></footer>
+</main>
+</body>
+</html>
