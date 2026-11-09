@@ -1,83 +1,32 @@
-# Liberty — vitrine pública (Fase 1)
+# Liberty Haul — vitrine, administração e agentes ISA
 
-Primeira versão estática e responsiva do site **Liberty**, preparada para publicação futura no domínio `libertyhaul.com.br`.
+A Liberty Haul reúne achadinhos indicados pela Isabelle e direciona visitantes às lojas parceiras. Site público: **https://libertyhaul.com.br**. Administração autenticada: **https://libertyhaul.com.br/admin/**.
 
-## Escopo autorizado
+## Comece aqui: Diretório Mestre
 
-- Home editorial, navegação de categorias e explicação de funcionamento.
-- Página `/isabelle/` dedicada à criadora **Isabelle**.
-- Página `/achadinhos/` com busca, filtros e renderização de produtos publicados.
-- Página `/lives/` para conteúdos vinculados a lives.
-- Página `/transparencia/` com aviso sobre links de afiliados.
-- Conteúdo inicial vazio, sem preços, itens ou redes sociais inventados.
-- Nenhuma dependência externa, serviço de autenticação ou rastreamento.
+**Antes de trabalhar neste projeto, leia [docs/gestao/00-INICIO.md](docs/gestao/00-INICIO.md).** É o ponto de entrada para agentes e chats, com agenda, manual, estado atual, histórico e protocolo de atualização.
 
-## Executar localmente
+| Documento | Função |
+|---|---|
+| [00-INICIO](docs/gestao/00-INICIO.md) | Referência central e caminho de leitura |
+| [AGENDA](docs/gestao/AGENDA.md) | Tarefas, responsáveis e próximos passos |
+| [ESTADO-ATUAL](docs/gestao/ESTADO-ATUAL.md) | Dados verificados e pendências |
+| [MANUAL](docs/gestao/MANUAL.md) | Arquitetura e regras aprovadas |
+| [HISTORICO](docs/gestao/HISTORICO.md) | Registros de implementação e validação |
+| [PROTOCOLO-AGENTES](docs/gestao/PROTOCOLO-AGENTES.md) | Como manter tudo atualizado com segurança |
 
-Na raiz do repositório:
+## Arquitetura atual
 
-```bash
-python -m http.server 8000
-```
+- Site em HTML/CSS/JS hospedado no GitHub Pages; vitrine `/achadinhos/`, área `/isabelle/`, `/lives/` e transparência.
+- `/admin/`: login Supabase, cadastro e publicação de produtos e aba **Sugestões da ISA**.
+- Supabase compartilhado no projeto `croma-hub`, com dados exclusivos no schema `liberty`, RLS e acesso protegido.
+- A aprovação/publicação de itens sugeridos é sempre humana. A ISA pesquisa e prepara sugestões; revisa o site e propõe melhorias sem implantá-las automaticamente.
+- A página `/lives/` ainda usa `data/content.json`, não sincronizada automaticamente ao catálogo.
 
-Abrir `http://localhost:8000/`. Não abrir os arquivos via `file://`: o catálogo depende de `fetch()` por HTTP.
+## Código e registros técnicos
 
-## Estrutura
+`index.html` · `achadinhos/` · `lives/` · `isabelle/` · `transparencia/` · `admin/` · `assets/` · `data/content.json` · `docs/gestao/`.
 
-```text
-index.html                 Home
-achadinhos/index.html      Busca e filtros
-isabelle/index.html        Área da criadora
-lives/index.html           Conteúdos e produtos das lives
-transparencia/index.html   Transparência de afiliados
-assets/css/styles.css      Design responsivo
-assets/js/site.js          Interações e catálogo
-assets/icons/              Marca ilustrativa provisória (estátua)
-data/content.json          Itens e lives vazios, até validação
-404.html                   Página não encontrada
-```
+Os registros anteriores continuam disponíveis por rastreabilidade: [Fase 1](docs/DECISOES_E_VALIDACAO.md), [Fase 2](docs/ADMINISTRACAO_LIBERTY_FASE2.md), [Fase 3](docs/ADMINISTRACAO_LIBERTY_FASE3.md). A documentação da Fase 1 descreve um estado **histórico**, anterior ao site e ao painel publicados; não use suas afirmações antigas como estado atual.
 
-## Cadastrar produtos na fase de conteúdo
-
-O arquivo `data/content.json` aceita `items` com esta estrutura **de exemplo técnico** (não representa produto comercial real):
-
-```json
-{
-  "id": "sku-ou-id-unico",
-  "title": "Título aprovado do produto",
-  "description": "Descrição validada",
-  "category": "tech",
-  "platform": "Marketplace parceiro",
-  "affiliate_url": "https://exemplo.com/produto",
-  "image": "assets/media/imagem.webp",
-  "published": true
-}
-```
-
-Valores de `category`: `beleza`, `casa`, `tech`, `estilo`. A imagem é opcional e deve residir no repositório em `assets/media/`. A URL precisa começar com `https:`. **Nunca** publicar sem checar o destino e a autorização comercial do link de afiliado. Nesta Fase 1, `items`, `lives` e `social_links` permanecem vazios.
-
-Para lives, `lives` aceita `title`, `date`, `description`, `url` (URL HTTPS) e `published: true`.
-
-## Publicação futura no GitHub Pages (não executada)
-
-1. Criar repositório **separado** `rdamatheus/LibertyHaul` (GitHub da conexão atual não disponibiliza ação de criação).
-2. Enviar os arquivos preservando pastas.
-3. Conferir o conteúdo, ativar **Settings → Pages → Deploy from a branch → main / root**, se essa opção estiver disponível ao proprietário.
-4. Validar o endereço temporário do GitHub Pages antes de conectar o domínio.
-5. Criar a configuração de domínio customizado no GitHub e **somente depois de nova autorização** configurar DNS no Registro.br.
-6. Conferir HTTPS e validar redirects antes de considerar a publicação concluída.
-
-**Não há arquivo `CNAME`**, pois a mudança de domínio ficou fora do escopo autorizado.
-
-## Segurança e limites
-
-- Nenhum checkout próprio, painel administrativo, banco, API, Supabase, login ou coleta de métricas está ativo.
-- Produtos são publicados apenas quando `published: true` e `affiliate_url` é HTTPS válido.
-- Links de afiliados abrem com `rel="sponsored noopener noreferrer"`; o site informa possível comissão.
-- CSS e JavaScript não exigem CDNs nem fontes externas.
-- `assets/icons/liberty-mark-*.svg` são símbolos **ilustrativos provisórios** da Estátua da Liberdade. Substituir somente após confirmar o arquivo final da marca. A imagem antiga `LOGO PRINCIPAL.jpg` da pasta Drive não foi aplicada por divergir da decisão posterior de usar no site a marca **Liberty** e a estátua como símbolo.
-- O arquivo de dados local é um estágio de conteúdo. Para funcionalidades de painel, comissões e controle de links, haverá proposta e implementação posteriores com isolamento de dados e autenticação.
-
-## Próxima fase, ainda não autorizada
-
-Liberty Hub administrativo, ISA, integrações de afiliados, relatórios e Supabase devem ser tratados separadamente. Os projetos Croma Hub, LUFF Store e Personal OS não devem ser alterados para publicar este site.
+Para executar arquivos estáticos localmente: `python -m http.server 8000` e abrir `http://localhost:8000/`. Para testar autenticação e catálogo, é necessário acesso às APIs Supabase. Nunca inclua chaves secretas no frontend ou na documentação.
