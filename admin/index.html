@@ -33,6 +33,11 @@
     </form>
   </section>
   <section id="workspace" hidden>
+    <nav class="admin-tabs" aria-label="Áreas administrativas">
+      <button class="admin-tab active" id="tab-products" type="button" aria-pressed="true">Produtos</button>
+      <button class="admin-tab" id="tab-suggestions" type="button" aria-pressed="false">Sugestões da ISA <span id="suggestion-count">0</span></button>
+    </nav>
+    <div id="products-panel">
     <div class="overview">
       <div class="metric"><span>Total de produtos</span><strong id="total-products">0</strong></div>
       <div class="metric"><span>Publicados</span><strong id="published-products">0</strong></div>
@@ -69,6 +74,25 @@
         <p id="product-empty" class="empty">Nenhum produto cadastrado ainda.</p>
       </section>
     </div>
+    </div>
+    <section id="suggestions-panel" hidden>
+      <div class="panel">
+        <div class="panel-heading">
+          <div>
+            <h2>Sugestões da ISA</h2>
+            <p class="hint">A ISA pesquisa; a Isabelle confere, edita e decide se deve publicar.</p>
+          </div>
+          <button id="reload-suggestions" class="outline" type="button">Atualizar</button>
+        </div>
+        <div class="suggestion-filter">
+          <label for="suggestion-status">Exibir</label>
+          <select id="suggestion-status"><option value="pending">Pendentes</option><option value="approved">Aprovadas</option><option value="rejected">Rejeitadas</option><option value="all">Todas</option></select>
+        </div>
+        <div id="suggestion-list" class="suggestion-list"></div>
+        <p id="suggestion-empty" class="empty">Nenhuma sugestão nesta situação.</p>
+        <p class="hint">Imagens encontradas são apenas referência. Após aprovar, adicione no cadastro a foto que pode utilizar comercialmente.</p>
+      </div>
+    </section>
   </section>
   <footer>Liberty Haul · administração privada · <a href="../transparencia/">Transparência sobre afiliados</a></footer>
 </main>
