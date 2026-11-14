@@ -90,25 +90,6 @@
     return card;
   }
 
-  function buildLive(live) {
-    if (live.published !== true || !live.title || typeof live.title !== 'string') return null;
-    const card = make('article', null, 'live-card');
-    card.append(make('span', 'CONTEÚDO / LIVE', 'eyebrow'));
-    card.append(make('h3', live.title));
-    if (live.date) card.append(make('p', live.date, 'live-card__date'));
-    if (live.description) card.append(make('p', live.description));
-    const link = marketplaceLink(live.url);
-    if (link) {
-      const anchor = make('a', 'Abrir conteúdo ↗', 'text-link');
-      anchor.href = link;
-      anchor.target = '_blank';
-      anchor.rel = 'noopener noreferrer';
-      card.append(anchor);
-    }
-    return card;
-  }
-
-
   // O perfil público do produto mantém o visitante na Liberty até escolher comprar.
   function initProductDetail() {
     const status = document.getElementById('detail-status');
@@ -223,33 +204,40 @@
     update();
   }
 
-  function initLives(lives) {
+  function initLives(items) {
     const list = document.getElementById('live-list');
     const empty = document.getElementById('lives-empty');
     if (!list || !empty) return;
     list.replaceChildren();
-    let count = 0;
-    lives.forEach(item => { const card = buildLive(item); if (card) { list.append(card); count++; } });
-    empty.hidden = count > 0;
+    items.forEach(item => {
+      const card = buildProduct(item);
+      if (card) list.append(card);
+    });
+    empty.hidden = list.children.length > 0;
   }
 
-  // Vitrine e destaques leem o mesmo catálogo publicado; lives continuam estáticas.
-  const contentRequest = (page === 'achadinhos' || page === 'home')
-    ? fetch(DATA_API + '/rest/v1/liberty_products?select=id,title,description,category,platform,affiliate_url,image_path,published&published=eq.true'
-          + (page === 'home' ? '&featured=eq.true&order=created_at.desc&limit=4' : '&order=created_at.desc'),
-        {headers:{apikey:PUBLISHABLE_KEY},cache:'no-store'})
-        .then(response => {if(!response.ok) throw new Error('Falha no catálogo'); return response.json();})
-        .then(items => ({items:items.map(item => Object.assign({},item,{
-          image:item.image_path && /^[a-zA-Z0-9_-]+\.(jpg|jpeg|png|webp)$/.test(item.image_path)
-            ? IMG_BASE + encodeURIComponent(item.image_path) : null
-        }))}))
-    : fetch(root + 'data/content.json', { cache: 'no-store' })
-        .then(response => { if (!response.ok) throw new Error('Falha nas lives'); return response.json(); });
+  // Vitrine, destaques e produtos de lives compartilham a mesma view publicada.
+  const filters = page === 'home'
+    ? '&featured=eq.true&order=created_at.desc&limit=4'
+    : page === 'lives'
+      ? '&live_featured=eq.true&order=created_at.desc'
+      : '&order=created_at.desc';
+  const contentRequest = fetch(
+    DATA_API + '/rest/v1/liberty_products?select=id,title,description,category,platform,affiliate_url,image_path,published'
+      + '&published=eq.true' + filters,
+    {headers:{apikey:PUBLISHABLE_KEY},cache:'no-store'}
+  ).then(response => {
+    if (!response.ok) throw new Error('Falha no catálogo');
+    return response.json();
+  }).then(items => ({items:items.map(item => Object.assign({},item,{
+    image:item.image_path && /^[a-zA-Z0-9_-]+\.(jpg|jpeg|png|webp)$/.test(item.image_path)
+      ? IMG_BASE + encodeURIComponent(item.image_path) : null
+  }))}));
   contentRequest
     .then(data => {
       if (page === 'home') initFeatured(Array.isArray(data.items) ? data.items : []);
       if (page === 'achadinhos') initCatalog(Array.isArray(data.items) ? data.items : []);
-      if (page === 'lives') initLives(Array.isArray(data.lives) ? data.lives : []);
+      if (page === 'lives') initLives(Array.isArray(data.items) ? data.items : []);
     })
     .catch(() => {
       if (page === 'achadinhos') {
