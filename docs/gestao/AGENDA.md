@@ -15,11 +15,15 @@
 
 | ISA-009 | Alta | Destaques na Home e botão Comprar | **4 destaques ativados; aguardando validação pública** | Tecnologia Liberty / Isabelle | Em 14/11 foram marcados 4 produtos existentes com imagens verificadas no bucket; conferir visualização real da Home → perfil → Comprar e comportamento em dispositivos móveis antes de concluir. |
 
+| ISA-005 | Média | Exibir produtos de lives pelo cadastro existente | **Código preparado; validar em produção** | Tecnologia Liberty / Isabelle | A página /lives/ consulta produtos publicados marcados com `live_featured`; validar no domínio e fazer teste real com produto que efetivamente apareceu em live, sem marcar itens fictícios. |
+| ISA-010 | Alta | Revisão de títulos, categorias e descrições | **Dados corrigidos; fotos pendentes** | Catálogo Liberty | 11 títulos padronizados, 10 descrições preenchidas, 9 categorias corrigidas no Supabase em 14/11; obter 4 imagens autorizadas e validar características dos anúncios com Isabelle. |
+| ISA-011 | Média | SEO básico do site | **Código preparado; validar em produção** | Tecnologia Liberty | Publicar e verificar `robots.txt` e `sitemap.xml`; revisar indexação; não prometer prévia individual de produto sem pré-renderização. |
+
 ## Backlog que NÃO é autorização de implementação
 
 | ID | Tema | Estado | Próxima decisão |
 |---|---|---|---|
-| ISA-005 | Integrar cadastro de produtos às lives | Não implementado | Definir fluxo: `/lives/` ainda usa `data/content.json`; nova aprovação necessária. |
+
 | ISA-006 | Identidade visual definitiva | Pendente | Confirmar logo/ícone antes de substituir a arte provisória. |
 | ISA-007 | Gerar links de afiliado via integração | Não confirmado | Verificar suporte das APIs e regras comerciais antes de propor solução. |
 
