@@ -11,6 +11,8 @@ Registro cronológico de entregas verificadas e pendências, sem apagar o passad
 | 08/11/2026 | Agentes de curadoria diária e revisão semanal criados. | Agendamentos existentes `ISA — Curadoria Liberty` e `ISA — Revisão do site`, habilitados. | Conferir primeiras execuções reais; não confundir agendamento com resultado. |
 | 08/11/2026 | Diretório Mestre implantado como ponto de entrada do projeto. | `docs/gestao/` + índice no `README.md`, versionados no repositório. | Configurar agentes e chats para leitura efetiva. |
 
+| 13/11/2026 | ISA-008: implementada em branch a página individual de produto, navegação da vitrine e cópia de link no painel. | `feat/produto-pagina-liberty-20261113`; verificação sintática de JS e simulações de produto publicado, oculto e ID inválido. | Não considerar concluído até merge, deploy e verificação no domínio público. |
+
 ## Modelo de registro novo
 
 `AAAA-MM-DD · ISA-XXX · evento · ação confirmada · fonte/link · validação · risco/pendência · próximo passo`.
