@@ -11,6 +11,13 @@
 - Automação diária `ISA — Curadoria Liberty` e semanal `ISA — Revisão do site` habilitadas, sem permissão de publicação autônoma.
 - `/lives/` ainda utiliza o arquivo estático `data/content.json`; não afirmar sincronização automática de lives.
 
+## Código incorporado em 13/11/2026 (ISA-008)
+
+- [PR #5](https://github.com/rdamatheus/LibertyHaul/pull/5) mesclada à `main`: nova página pública `/produto/?id=<uuid>`, cards internos de vitrine e **Copiar link** no painel.
+- Foram verificados os arquivos na branch principal, sintaxe JavaScript e cenários simulados de item publicado, não publicado e ID inválido.
+- **Pendente:** confirmação do deploy pelo GitHub Pages e teste real no domínio/navegador. A ferramenta de acesso à URL pública não conseguiu retornar a página; não declarar validação pública concluída.
+- Nenhuma modificação de banco, DNS, dados de produto ou integração realizada nesta etapa.
+
 ## Evidência do Supabase em 08/11/2026
 
 | Dado | Quantidade |
