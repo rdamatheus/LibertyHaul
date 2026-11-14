@@ -17,6 +17,9 @@ Registro cronológico de entregas verificadas e pendências, sem apagar o passad
 
 | 14/11/2026 | ISA-009: responsável delegou escolha; quatro produtos existentes ativados como destaques na Home. | UPDATE restrito aos 4 UUIDs no schema `liberty` confirmado por RETURNING; leitura posterior na view resultou exatamente em 4 publicados/destacados; as 4 imagens constam no bucket. Auditoria de catálogo: 10 descrições vazias, 4 produtos sem foto e 9 em categoria `beleza`. | Visualização no domínio não confirmada; recomenda-se correção de classificação/conteúdo e verificação da publicação. Nenhuma dessas outras mudanças foi executada. |
 
+| 14/11/2026 | ISA-010: revisão de conteúdo de 11 produtos publicados. | Atualizados 11 títulos, 9 categorias e 10 descrições pela tabela `liberty.products`; consulta posterior confirmou 0 descrições vazias, 4 imagens ausentes, 4 destaques preservados e 11 publicados. | Textos limitados aos atributos declarados anteriormente; faltam imagens autorizadas e conferência comercial detalhada dos anúncios. |
+| 14/11/2026 | ISA-005/ISA-011: preparada integração da página de lives ao campo existente `live_featured`, mais `robots.txt` e `sitemap.xml`. | Branch `feat/revisao-catalogo-lives-seo-20261114`; código JS sintaticamente válido; simulações de página de lives com/sem itens e Home com destaques passaram. | Confirmar PR/merge, deploy e teste no domínio; não inventar presença de produtos em live nem métricas analíticas. |
+
 ## Modelo de registro novo
 
 `AAAA-MM-DD · ISA-XXX · evento · ação confirmada · fonte/link · validação · risco/pendência · próximo passo`.

@@ -32,6 +32,14 @@
 - **Diagnóstico factual para revisão:** 10 de 11 produtos sem descrição, 4 sem imagem; 9 classificados como `beleza`, incluindo itens de informática, fotografia, utilidades e vestuário. `liberty.suggestions` tem 0 registros; `live_featured` em 0 produtos; `data/content.json` continua sem lives.
 - **Não verificado:** apresentação e navegação no domínio público; o navegador de consulta não acessou `libertyhaul.com.br` e o ambiente de terminal também não resolveu domínios públicos externos (não é evidência conclusiva de falha de DNS específica da Liberty).
 
+## Revisão adicional do catálogo e do site — 14/11/2026
+
+- Consulta posterior ao UPDATE: 11 produtos publicados, 4 destacados, **0 descrições vazias**, **4 imagens ausentes**, **0 produtos marcados como live**.
+- Foram corrigidos 11 títulos, 9 classificações em `category` e preenchidas 10 descrições curtas usando somente dados dos nomes cadastrados. Categorias atuais: 6 `tech`, 3 `casa`, 2 `estilo`. Nem os links afiliados, nem `published` ou `featured` foram alterados.
+- Código da branch `feat/revisao-catalogo-lives-seo-20261114`: página `/lives/` passa a consultar `liberty_products` usando `live_featured=true` e reaproveita cards internos; criados `robots.txt` e `sitemap.xml` (rotas estáticas).
+- Não foram criadas tabelas/integrações, nem instalados rastreadores. Links individuais seguem com prévias sociais genéricas. Quatro imagens comerciais faltantes requerem fornecimento/validação.
+- Testes de JS simulados passaram; a validação de navegação no domínio público permanece pendente devido à limitação de acesso ao site pelas ferramentas.
+
 ## Evidência do Supabase em 08/11/2026
 
 | Dado | Quantidade |

@@ -20,7 +20,7 @@
 | Sugestões | `liberty.suggestions`, view `public.liberty_suggestions` |
 | Aprovação | `public.liberty_approve_suggestion` (ação humana) |
 | Imagens | Bucket `liberty-product-images` (imagens públicas, gravação autorizada) |
-| Lives | `data/content.json` ainda estático |
+| Lives | `/lives/` utiliza a mesma view do catálogo; `data/content.json` permanece apenas como arquivo histórico sem leitura ativa |
 
 ## Regras de negócio
 
@@ -30,7 +30,7 @@
 4. A Isabelle confere a origem, ajusta dados e confirma explicitamente a publicação. O link de afiliado HTTPS é obrigatório para publicar e precisa ser realmente vinculado ao programa.
 5. Não inventar preço, avaliações, estoque, disponibilidade ou imagens autorizadas. Preços observados são temporais e exigem fonte/data.
 6. O agente de auditoria pode apresentar diagnóstico e preparar PRs de pequenas correções para revisão; **sem merge/deploy automático**.
-7. Não transformar indicação de live em integração funcional com a página `/lives/`.
+7. Produtos em `/lives/` provêm de `liberty.products` com `published=true` e `live_featured=true`. A marcação exige revisão administrativa; não afirmar que houve uma live sem evidência.
 8. Nunca modificar dados, permissões ou regras de Croma, LUFF ou Personal OS como efeito deste projeto.
 
 ## Controle de alterações
@@ -57,6 +57,15 @@
 - A seção "Achadinhos em destaque" fica oculta se nenhum produto estiver selecionado; o clique sempre abre o perfil Liberty, nunca o afiliado diretamente.
 - Não criar outro catálogo, checkout, rotina automática de escolha, tabela ou integração. A Isabelle controla a marcação e a publicação.
 - No perfil individual, o CTA visível é **"Comprar"**, mantendo explicação sobre marketplace e comissão.
+
+## Revisão e qualidade de conteúdo — autorização de 14/11/2026
+
+- Corrigir categorias e padronizar os produtos existentes pela nomenclatura do anúncio; descrições resumem apenas atributos já declarados, sem garantir estoque, preço, qualidade, certificações ou compatibilidade não conferida.
+- Manter links afiliados, publicação e seleção de destaques sem mudanças durante limpeza de conteúdo; os quatro produtos sem fotografia devem receber somente imagens legalmente autorizadas, com conferência humana.
+- A área de lives reutiliza o campo `live_featured` já presente no cadastro. A aplicação não transfere automaticamente produtos para lives, e não cria outra tabela ou conteúdo.
+- SEO básico: `robots.txt` e `sitemap.xml` com rotas públicas estáveis. As URLs de produto com parâmetro `id` não são pré-renderizadas; prévias sociais específicas e sitemap automático por produto exigem projeto futuro.
+- Métricas de visitas/cliques exigem decisão explícita sobre plataforma, consentimento e retenção antes de integração; não adicionar rastreadores automaticamente.
+- Não modificar autenticação ou configuração geral do projeto Supabase compartilhado.
 
 ## Referências históricas
 
