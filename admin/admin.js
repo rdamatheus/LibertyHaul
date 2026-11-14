@@ -72,6 +72,23 @@
     products = Array.isArray(rows) ? rows : [];
     renderProducts();
   }
+  // Publicar um link Liberty permite compartilhar sem enviar diretamente ao afiliado.
+  async function copyProductLink(product) {
+    if (!product.published || !product.id) {
+      notice('Publique o produto antes de compartilhar o link.', true);
+      return;
+    }
+    const url = new URL('../produto/?id=' + encodeURIComponent(product.id), window.location.href).href;
+    try {
+      if (!navigator.clipboard || !navigator.clipboard.writeText) throw new Error('Área de transferência indisponível');
+      await navigator.clipboard.writeText(url);
+      notice('Link da página Liberty copiado.');
+    } catch (_) {
+      // Permite cópia manual em navegadores sem acesso à área de transferência.
+      window.prompt('Copie o link da página do produto:', url);
+    }
+  }
+
   function renderProducts() {
     $('total-products').textContent = String(products.length);
     const published = products.filter((p) => p.published).length;
@@ -100,7 +117,13 @@
       info.append(title,meta);
       const actions = document.createElement('div');
       actions.className = 'product-actions';
-      for (const [name, action, danger] of [['Editar',()=>editProduct(product),false],[product.published?'Ocultar':'Publicar',()=>togglePublished(product),false],['Excluir',()=>deleteProduct(product),true]]) {
+      const actionsList = [
+        ['Editar', () => editProduct(product), false],
+        [product.published ? 'Ocultar' : 'Publicar', () => togglePublished(product), false],
+        ['Excluir', () => deleteProduct(product), true]
+      ];
+      if (product.published) actionsList.splice(1, 0, ['Copiar link', () => copyProductLink(product), false]);
+      for (const [name, action, danger] of actionsList) {
         const b = document.createElement('button');
         b.type = 'button';
         b.textContent = name;

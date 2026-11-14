@@ -11,6 +11,8 @@
 | ISA-003 | Alta | Curadoria e cadastro de propostas | **Automação ativa; resultado pendente** | Agente ISA — Curadoria Liberty | Após a primeira execução diária, verificar fontes, duplicatas, registros inseridos e atualizar quantidade com evidência. |
 | ISA-004 | Média | Auditoria periódica do site | **Automação ativa; resultado pendente** | Agente ISA — Revisão do site | Conferir primeira auditoria semanal e propostas/PR; nenhuma mudança de site sem aprovação. |
 
+| ISA-008 | Alta | Páginas individuais e links Liberty compartilháveis | **Aguardando validação pública** | Tecnologia Liberty | Conferir PR/deploy e testar no domínio produto publicado, ID inválido, rascunho, botão afiliado e cópia no painel; sem mudar Supabase ou DNS. |
+
 ## Backlog que NÃO é autorização de implementação
 
 | ID | Tema | Estado | Próxima decisão |

@@ -40,6 +40,16 @@
 - Só declarar concluído após teste/validação; registrar impacto, dependências, riscos, pendências e evidência em [HISTORICO.md](HISTORICO.md).
 - Não gravar senhas, tokens, service_role keys ou informações privadas de terceiros nestes arquivos.
 
+## Perfil individual e links Liberty — decisão aprovada em 13/11/2026
+
+- Cada produto publicado mantém seu ID UUID existente e ganha uma URL pública em `/produto/?id=<uuid>`, sem criar outra tabela ou outro catálogo.
+- Imagem, título e botão "Ver detalhes" na vitrine conduzem para o perfil interno; somente "Comprar na loja parceira" leva ao link de afiliado HTTPS, em nova aba com `rel="sponsored noopener noreferrer"`.
+- O painel de administração oferece "Copiar link" para produtos publicados; rascunhos não ganham links públicos acessíveis.
+- A página consulta exclusivamente produtos publicados, mostrando indisponibilidade para IDs inexistentes, inválidos ou ocultos.
+- Checkout, pagamento, entrega e suporte ao pedido permanecem no marketplace. Informar claramente a natureza de indicação/comissão.
+- Hospedagem estática no GitHub Pages: prévias por produto em aplicativos sociais podem usar metadados genéricos, até futura solução de pré-renderização aprovada separadamente.
+- Não alterar links afiliados cadastrados, banco de dados, DNS, integrações nem mecanismos de aprovação de publicação por esta funcionalidade.
+
 ## Referências históricas
 
 [Decisões da Fase 1](../DECISOES_E_VALIDACAO.md) · [Fase 2](../ADMINISTRACAO_LIBERTY_FASE2.md) · [Fase 3](../ADMINISTRACAO_LIBERTY_FASE3.md). Estas fontes preservam o contexto de cada época; dados atuais devem ser conferidos.

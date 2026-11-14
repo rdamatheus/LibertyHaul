@@ -26,7 +26,7 @@
     document.addEventListener('keydown', event => { if (event.key === 'Escape') closeMenu(); });
   }
 
-  if (page !== 'achadinhos' && page !== 'lives') return;
+  if (page !== 'achadinhos' && page !== 'lives' && page !== 'produto') return;
 
   const acceptedCategories = new Set(['todos', 'beleza', 'casa', 'tech', 'estilo']);
   const categoryLabels = {
@@ -59,10 +59,13 @@
   }
 
   function buildProduct(item) {
-    const url = marketplaceLink(item.affiliate_url);
-    if (!url || item.published !== true || !item.title || !categoryLabels[item.category]) return null;
+    if (!marketplaceLink(item.affiliate_url) || item.published !== true ||
+        !item.id || !item.title || !categoryLabels[item.category]) return null;
+    const detailUrl = root + 'produto/?id=' + encodeURIComponent(item.id);
     const card = make('article', null, 'product-card');
-    const media = make('div', null, 'product-card__media');
+    const media = make('a', null, 'product-card__media');
+    media.href = detailUrl;
+    media.setAttribute('aria-label', 'Ver detalhes de ' + item.title);
     const image = imageLink(item.image);
     if (image) {
       const photo = document.createElement('img');
@@ -73,13 +76,15 @@
     } else media.append(make('span', '✧', 'product-card__fallback'));
     const content = make('div', null, 'product-card__body');
     content.append(make('span', categoryLabels[item.category], 'product-card__tag'));
-    content.append(make('h3', item.title));
+    const heading = make('h3');
+    const titleLink = make('a', item.title, 'product-card__title-link');
+    titleLink.href = detailUrl;
+    heading.append(titleLink);
+    content.append(heading);
     if (item.platform) content.append(make('p', `Disponível em ${item.platform}`));
-    const link = make('a', 'Ver na loja ↗');
-    link.href = url;
-    link.target = '_blank';
-    link.rel = 'sponsored noopener noreferrer';
-    link.setAttribute('aria-label', `Ver ${item.title} na loja parceira`);
+    const link = make('a', 'Ver detalhes →');
+    link.href = detailUrl;
+    link.setAttribute('aria-label', 'Ver detalhes de ' + item.title);
     content.append(link);
     card.append(media, content);
     return card;
@@ -101,6 +106,63 @@
       card.append(anchor);
     }
     return card;
+  }
+
+
+  // O perfil público do produto mantém o visitante na Liberty até escolher comprar.
+  function initProductDetail() {
+    const status = document.getElementById('detail-status');
+    const content = document.getElementById('detail-content');
+    const id = new URLSearchParams(location.search).get('id');
+    const uuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    if (!status || !content) return;
+    if (!id || !uuid.test(id)) {
+      status.textContent = 'Link de produto inválido. Volte à vitrine e escolha um achadinho.';
+      return;
+    }
+    const query = '/rest/v1/liberty_products?select=id,title,description,category,platform,affiliate_url,image_path,published'
+      + '&id=eq.' + encodeURIComponent(id) + '&published=eq.true&limit=1';
+    fetch(DATA_API + query, {headers:{apikey:PUBLISHABLE_KEY},cache:'no-store'})
+      .then(response => { if (!response.ok) throw new Error('Falha ao consultar produto'); return response.json(); })
+      .then(items => {
+        const item = Array.isArray(items) ? items[0] : null;
+        const affiliate = item && marketplaceLink(item.affiliate_url);
+        if (!item || item.published !== true || !affiliate || !item.title) {
+          status.textContent = 'Este produto não está disponível. Explore outros achadinhos na vitrine.';
+          return;
+        }
+        const category = categoryLabels[item.category] || 'Achadinho';
+        document.title = item.title + ' | Liberty Haul';
+        document.getElementById('detail-category').textContent = category;
+        document.getElementById('detail-title').textContent = item.title;
+        document.getElementById('detail-description').textContent =
+          typeof item.description === 'string' && item.description.trim()
+            ? item.description.trim()
+            : 'Confira este achadinho selecionado pela Liberty Haul.';
+        document.getElementById('detail-marketplace').textContent =
+          'Loja parceira: ' + (item.platform || 'Marketplace');
+        const photoBox = document.getElementById('detail-photo');
+        const image = item.image_path && /^[a-zA-Z0-9_-]+\.(jpg|jpeg|png|webp)$/.test(item.image_path)
+          ? imageLink(IMG_BASE + encodeURIComponent(item.image_path)) : null;
+        if (image) {
+          const photo = make('img');
+          photo.src = image;
+          photo.alt = item.title;
+          photo.loading = 'eager';
+          photoBox.replaceChildren(photo);
+        } else photoBox.replaceChildren(make('span', '✧', 'product-detail__fallback'));
+        document.getElementById('detail-buy').href = affiliate;
+        status.hidden = true;
+        content.hidden = false;
+      })
+      .catch(() => {
+        status.textContent = 'Não foi possível carregar este produto agora. Tente novamente mais tarde.';
+      });
+  }
+
+  if (page === 'produto') {
+    initProductDetail();
+    return;
   }
 
   function initCatalog(items) {
