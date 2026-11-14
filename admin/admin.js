@@ -113,7 +113,7 @@
       const title = document.createElement('strong');
       title.textContent = product.title;
       const meta = document.createElement('small');
-      meta.textContent = product.platform + ' · ' + (product.published ? 'Publicado' : 'Rascunho') + (product.live_featured ? ' · Live' : '');
+      meta.textContent = product.platform + ' · ' + (product.published ? 'Publicado' : 'Rascunho') + (product.live_featured ? ' · Live' : '') + (product.featured ? ' · Destaque' : '');
       info.append(title,meta);
       const actions = document.createElement('div');
       actions.className = 'product-actions';
@@ -147,6 +147,7 @@
     $('affiliate-url').value = product.affiliate_url || '';
     $('published').checked = Boolean(product.published);
     $('live-featured').checked = Boolean(product.live_featured);
+    $('featured').checked = Boolean(product.featured);
     $('photo').value = '';
     $('photo-current').textContent = product.image_path ? 'Imagem cadastrada: ' + product.image_path : '';
     $('title').focus();
@@ -194,6 +195,7 @@
         image_path:imagePath || null,
         published:$('published').checked,
         live_featured:$('live-featured').checked,
+        featured:$('featured').checked,
         updated_at:new Date().toISOString()
       };
       const path = '/rest/v1/liberty_products' + (editing ? '?id=eq.' + encodeURIComponent(editing.id) : '');
