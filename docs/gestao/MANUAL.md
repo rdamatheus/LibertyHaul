@@ -43,12 +43,20 @@
 ## Perfil individual e links Liberty — decisão aprovada em 13/11/2026
 
 - Cada produto publicado mantém seu ID UUID existente e ganha uma URL pública em `/produto/?id=<uuid>`, sem criar outra tabela ou outro catálogo.
-- Imagem, título e botão "Ver detalhes" na vitrine conduzem para o perfil interno; somente "Comprar na loja parceira" leva ao link de afiliado HTTPS, em nova aba com `rel="sponsored noopener noreferrer"`.
+- Imagem, título e botão "Ver detalhes" na vitrine conduzem para o perfil interno; somente o botão "Comprar" leva ao link de afiliado HTTPS, em nova aba com `rel="sponsored noopener noreferrer"`.
 - O painel de administração oferece "Copiar link" para produtos publicados; rascunhos não ganham links públicos acessíveis.
 - A página consulta exclusivamente produtos publicados, mostrando indisponibilidade para IDs inexistentes, inválidos ou ocultos.
 - Checkout, pagamento, entrega e suporte ao pedido permanecem no marketplace. Informar claramente a natureza de indicação/comissão.
 - Hospedagem estática no GitHub Pages: prévias por produto em aplicativos sociais podem usar metadados genéricos, até futura solução de pré-renderização aprovada separadamente.
 - Não alterar links afiliados cadastrados, banco de dados, DNS, integrações nem mecanismos de aprovação de publicação por esta funcionalidade.
+
+## Destaques na Home — decisão aprovada em 13/11/2026
+
+- A Home reutiliza os cards da vitrine e consulta a view existente `public.liberty_products`, exibindo até quatro produtos marcados com `featured=true` e `published=true`, em ordem de cadastro mais recente.
+- Um único campo booleano `liberty.products.featured` (padrão `false`) controla destaque no formulário já existente. O campo `live_featured` permanece independente.
+- A seção "Achadinhos em destaque" fica oculta se nenhum produto estiver selecionado; o clique sempre abre o perfil Liberty, nunca o afiliado diretamente.
+- Não criar outro catálogo, checkout, rotina automática de escolha, tabela ou integração. A Isabelle controla a marcação e a publicação.
+- No perfil individual, o CTA visível é **"Comprar"**, mantendo explicação sobre marketplace e comissão.
 
 ## Referências históricas
 

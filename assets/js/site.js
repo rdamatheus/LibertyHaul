@@ -26,7 +26,7 @@
     document.addEventListener('keydown', event => { if (event.key === 'Escape') closeMenu(); });
   }
 
-  if (page !== 'achadinhos' && page !== 'lives' && page !== 'produto') return;
+  if (page !== 'home' && page !== 'achadinhos' && page !== 'lives' && page !== 'produto') return;
 
   const acceptedCategories = new Set(['todos', 'beleza', 'casa', 'tech', 'estilo']);
   const categoryLabels = {
@@ -165,6 +165,18 @@
     return;
   }
 
+  function initFeatured(items) {
+    const section = document.getElementById('home-featured');
+    const grid = document.getElementById('featured-products');
+    if (!section || !grid) return;
+    grid.replaceChildren();
+    items.forEach(item => {
+      const card = buildProduct(item);
+      if (card) grid.append(card);
+    });
+    section.hidden = grid.children.length === 0;
+  }
+
   function initCatalog(items) {
     const grid = document.getElementById('product-grid');
     const empty = document.getElementById('catalog-empty');
@@ -221,9 +233,10 @@
     empty.hidden = count > 0;
   }
 
-  // A vitrine lê produtos publicados do banco; lives legadas continuam no conteúdo estático.
-  const contentRequest = page === 'achadinhos'
-    ? fetch(DATA_API + '/rest/v1/liberty_products?select=id,title,description,category,platform,affiliate_url,image_path,published&published=eq.true&order=created_at.desc',
+  // Vitrine e destaques leem o mesmo catálogo publicado; lives continuam estáticas.
+  const contentRequest = (page === 'achadinhos' || page === 'home')
+    ? fetch(DATA_API + '/rest/v1/liberty_products?select=id,title,description,category,platform,affiliate_url,image_path,published&published=eq.true'
+          + (page === 'home' ? '&featured=eq.true&order=created_at.desc&limit=4' : '&order=created_at.desc'),
         {headers:{apikey:PUBLISHABLE_KEY},cache:'no-store'})
         .then(response => {if(!response.ok) throw new Error('Falha no catálogo'); return response.json();})
         .then(items => ({items:items.map(item => Object.assign({},item,{
@@ -234,6 +247,7 @@
         .then(response => { if (!response.ok) throw new Error('Falha nas lives'); return response.json(); });
   contentRequest
     .then(data => {
+      if (page === 'home') initFeatured(Array.isArray(data.items) ? data.items : []);
       if (page === 'achadinhos') initCatalog(Array.isArray(data.items) ? data.items : []);
       if (page === 'lives') initLives(Array.isArray(data.lives) ? data.lives : []);
     })
