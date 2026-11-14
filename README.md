@@ -21,11 +21,11 @@ A Liberty Haul reúne achadinhos indicados pela Isabelle e direciona visitantes 
 - `/admin/`: login Supabase, cadastro e publicação de produtos e aba **Sugestões da ISA**.
 - Supabase compartilhado no projeto `croma-hub`, com dados exclusivos no schema `liberty`, RLS e acesso protegido.
 - A aprovação/publicação de itens sugeridos é sempre humana. A ISA pesquisa e prepara sugestões; revisa o site e propõe melhorias sem implantá-las automaticamente.
-- A página `/lives/` ainda usa `data/content.json`, não sincronizada automaticamente ao catálogo.
+- `/lives/` utiliza os produtos publicados sinalizados pelo campo `live_featured` no mesmo catálogo; `data/content.json` permanece apenas como referência histórica.
 
 ## Código e registros técnicos
 
-`index.html` · `achadinhos/` · `produto/` · `lives/` · `isabelle/` · `transparencia/` · `admin/` · `assets/` · `data/content.json` · `docs/gestao/`.
+`index.html` · `achadinhos/` · `produto/` · `lives/` · `isabelle/` · `transparencia/` · `admin/` · `assets/` · `data/content.json` (histórico) · `robots.txt` · `sitemap.xml` · `docs/gestao/`.
 
 Os registros anteriores continuam disponíveis por rastreabilidade: [Fase 1](docs/DECISOES_E_VALIDACAO.md), [Fase 2](docs/ADMINISTRACAO_LIBERTY_FASE2.md), [Fase 3](docs/ADMINISTRACAO_LIBERTY_FASE3.md). A documentação da Fase 1 descreve um estado **histórico**, anterior ao site e ao painel publicados; não use suas afirmações antigas como estado atual.
 
