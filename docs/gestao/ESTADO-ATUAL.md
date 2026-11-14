@@ -24,6 +24,14 @@
 - Consulta após a migração: 11 produtos cadastrados, 11 publicados, 0 em destaque. Os destaques dependem de marcação pela Isabelle no `/admin/`.
 - [PR #6](https://github.com/rdamatheus/LibertyHaul/pull/6) mesclada à `main`: seção Home, checkbox no painel e CTA "Comprar" conferidos no código. Publicação e teste público não confirmados, pois o domínio não respondeu às consultas externas.
 
+## Consulta do catálogo em 14/11/2026 — ISA-009
+
+- Existem **11 produtos publicados**, sendo **4 com `featured=true`**, confirmados novamente pela view `public.liberty_products`; nenhuma nova tabela ou produto foi criado.
+- Destaques selecionados por delegação expressa do responsável: Taças Diamond (ID `a97124f4-9553-47c1-b68b-88f46e567846`); Espelho Orgânico (ID `fbf07019-e134-4d66-be3d-8e696ff656d1`); Microfone Kaidi (ID `8a247420-1f8c-467a-a6e6-43a7de642219`); Body feminino (ID `74ec7cb5-d7ab-4e74-b0ec-b626c2cf57ae`).
+- Os quatro possuem imagem registrada no bucket `liberty-product-images`; as URLs de afiliado não foram alteradas.
+- **Diagnóstico factual para revisão:** 10 de 11 produtos sem descrição, 4 sem imagem; 9 classificados como `beleza`, incluindo itens de informática, fotografia, utilidades e vestuário. `liberty.suggestions` tem 0 registros; `live_featured` em 0 produtos; `data/content.json` continua sem lives.
+- **Não verificado:** apresentação e navegação no domínio público; o navegador de consulta não acessou `libertyhaul.com.br` e o ambiente de terminal também não resolveu domínios públicos externos (não é evidência conclusiva de falha de DNS específica da Liberty).
+
 ## Evidência do Supabase em 08/11/2026
 
 | Dado | Quantidade |
