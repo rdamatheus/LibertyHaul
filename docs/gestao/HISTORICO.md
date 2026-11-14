@@ -11,7 +11,7 @@ Registro cronológico de entregas verificadas e pendências, sem apagar o passad
 | 08/11/2026 | Agentes de curadoria diária e revisão semanal criados. | Agendamentos existentes `ISA — Curadoria Liberty` e `ISA — Revisão do site`, habilitados. | Conferir primeiras execuções reais; não confundir agendamento com resultado. |
 | 08/11/2026 | Diretório Mestre implantado como ponto de entrada do projeto. | `docs/gestao/` + índice no `README.md`, versionados no repositório. | Configurar agentes e chats para leitura efetiva. |
 
-| 13/11/2026 | ISA-008: implementada em branch a página individual de produto, navegação da vitrine e cópia de link no painel. | `feat/produto-pagina-liberty-20261113`; verificação sintática de JS e simulações de produto publicado, oculto e ID inválido. | Não considerar concluído até merge, deploy e verificação no domínio público. |
+| 13/11/2026 | ISA-008: página individual, navegação interna da vitrine e copiar link incorporados à `main`. | [PR #5](https://github.com/rdamatheus/LibertyHaul/pull/5) mesclada (commit `0335ce3`); JS validado sintaticamente e simulações de publicado, oculto e ID inválido passaram; arquivos conferidos na `main`. | Validação real do GitHub Pages e do fluxo no navegador ainda não confirmada; acesso automatizado ao domínio falhou. |
 
 ## Modelo de registro novo
 
