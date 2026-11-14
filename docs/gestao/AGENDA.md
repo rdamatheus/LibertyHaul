@@ -1,6 +1,6 @@
 # Agenda — Liberty Haul
 
-**Conferida em:** 08/11/2026 (BRT). Os estados refletem evidência disponível nessa data; não são sincronização em tempo real.
+**Conferida em:** 14/11/2026 (BRT). Os estados refletem evidências consultadas nessa data; não são sincronização em tempo real.
 
 ## Quadro operacional
 
@@ -15,9 +15,9 @@
 
 | ISA-009 | Alta | Destaques na Home e botão Comprar | **4 destaques ativados; aguardando validação pública** | Tecnologia Liberty / Isabelle | Em 14/11 foram marcados 4 produtos existentes com imagens verificadas no bucket; conferir visualização real da Home → perfil → Comprar e comportamento em dispositivos móveis antes de concluir. |
 
-| ISA-005 | Média | Exibir produtos de lives pelo cadastro existente | **Código preparado; validar em produção** | Tecnologia Liberty / Isabelle | A página /lives/ consulta produtos publicados marcados com `live_featured`; validar no domínio e fazer teste real com produto que efetivamente apareceu em live, sem marcar itens fictícios. |
+| ISA-005 | Média | Exibir produtos de lives pelo cadastro existente | **PR #7 integrada; validar em produção** | Tecnologia Liberty / Isabelle | A página /lives/ consulta produtos publicados marcados com `live_featured`; validar no domínio e fazer teste real com produto que efetivamente apareceu em live, sem marcar itens fictícios. |
 | ISA-010 | Alta | Revisão de títulos, categorias e descrições | **Dados corrigidos; fotos pendentes** | Catálogo Liberty | 11 títulos padronizados, 10 descrições preenchidas, 9 categorias corrigidas no Supabase em 14/11; obter 4 imagens autorizadas e validar características dos anúncios com Isabelle. |
-| ISA-011 | Média | SEO básico do site | **Código preparado; validar em produção** | Tecnologia Liberty | Publicar e verificar `robots.txt` e `sitemap.xml`; revisar indexação; não prometer prévia individual de produto sem pré-renderização. |
+| ISA-011 | Média | SEO básico do site | **PR #7 integrada; validar em produção** | Tecnologia Liberty | Publicar e verificar `robots.txt` e `sitemap.xml`; revisar indexação; não prometer prévia individual de produto sem pré-renderização. |
 
 ## Backlog que NÃO é autorização de implementação
 
