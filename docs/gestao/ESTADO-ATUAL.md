@@ -18,6 +18,12 @@
 - **Pendente:** confirmação do deploy pelo GitHub Pages e teste real no domínio/navegador. A ferramenta de acesso à URL pública não conseguiu retornar a página; não declarar validação pública concluída.
 - Nenhuma modificação de banco, DNS, dados de produto ou integração realizada nesta etapa.
 
+## Evolução ISA-009 — 13/11/2026
+
+- Campo `featured boolean not null default false` integrado à tabela `liberty.products` e à view pública existente, preservando `security_invoker=true` e as políticas RLS; sem novas tabelas.
+- Consulta após a migração: 11 produtos cadastrados, 11 publicados, 0 em destaque. Os destaques dependem de marcação pela Isabelle no `/admin/`.
+- Código de Home e painel preparado na branch `feat/destaques-home-isa-20261113`; publicação e teste público pendentes.
+
 ## Evidência do Supabase em 08/11/2026
 
 | Dado | Quantidade |
