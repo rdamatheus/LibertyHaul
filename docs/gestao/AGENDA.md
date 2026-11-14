@@ -13,6 +13,8 @@
 
 | ISA-008 | Alta | Páginas individuais e links Liberty compartilháveis | **Aguardando validação pública** | Tecnologia Liberty | Conferir PR/deploy e testar no domínio produto publicado, ID inválido, rascunho, botão afiliado e cópia no painel; sem mudar Supabase ou DNS. |
 
+| ISA-009 | Alta | Destaques na Home e botão Comprar | **Aguardando publicação e teste público** | Tecnologia Liberty / Isabelle | Verificar PR e deploy; Isabelle marca até quatro produtos no painel e testa Home → perfil → Comprar; proteger rascunhos e manter somente links afiliados verificados. |
+
 ## Backlog que NÃO é autorização de implementação
 
 | ID | Tema | Estado | Próxima decisão |
