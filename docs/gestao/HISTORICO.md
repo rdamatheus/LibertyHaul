@@ -15,6 +15,8 @@ Registro cronológico de entregas verificadas e pendências, sem apagar o passad
 
 | 13/11/2026 | ISA-009: CTA 'Comprar', seleção de destaque no painel e seção Home incorporados à `main`, sem novo catálogo. | [PR #6](https://github.com/rdamatheus/LibertyHaul/pull/6) mesclada (commit `08e8318`); migração Supabase `liberty_home_featured_products` aplicada e verificada; código relido na `main`; JS sintaticamente válido e simulação de Home com 4/0 cards aprovada. | Domínio `libertyhaul.com.br` não acessível nas consultas externas, portanto deploy e navegação reais ainda não validados. Nenhum produto marcado como destaque automaticamente. |
 
+| 14/11/2026 | ISA-009: responsável delegou escolha; quatro produtos existentes ativados como destaques na Home. | UPDATE restrito aos 4 UUIDs no schema `liberty` confirmado por RETURNING; leitura posterior na view resultou exatamente em 4 publicados/destacados; as 4 imagens constam no bucket. Auditoria de catálogo: 10 descrições vazias, 4 produtos sem foto e 9 em categoria `beleza`. | Visualização no domínio não confirmada; recomenda-se correção de classificação/conteúdo e verificação da publicação. Nenhuma dessas outras mudanças foi executada. |
+
 ## Modelo de registro novo
 
 `AAAA-MM-DD · ISA-XXX · evento · ação confirmada · fonte/link · validação · risco/pendência · próximo passo`.
