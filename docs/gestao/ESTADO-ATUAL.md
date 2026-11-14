@@ -22,7 +22,7 @@
 
 - Campo `featured boolean not null default false` integrado à tabela `liberty.products` e à view pública existente, preservando `security_invoker=true` e as políticas RLS; sem novas tabelas.
 - Consulta após a migração: 11 produtos cadastrados, 11 publicados, 0 em destaque. Os destaques dependem de marcação pela Isabelle no `/admin/`.
-- Código de Home e painel preparado na branch `feat/destaques-home-isa-20261113`; publicação e teste público pendentes.
+- [PR #6](https://github.com/rdamatheus/LibertyHaul/pull/6) mesclada à `main`: seção Home, checkbox no painel e CTA "Comprar" conferidos no código. Publicação e teste público não confirmados, pois o domínio não respondeu às consultas externas.
 
 ## Evidência do Supabase em 08/11/2026
 
