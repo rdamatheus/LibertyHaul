@@ -13,7 +13,7 @@ Registro cronológico de entregas verificadas e pendências, sem apagar o passad
 
 | 13/11/2026 | ISA-008: página individual, navegação interna da vitrine e copiar link incorporados à `main`. | [PR #5](https://github.com/rdamatheus/LibertyHaul/pull/5) mesclada (commit `0335ce3`); JS validado sintaticamente e simulações de publicado, oculto e ID inválido passaram; arquivos conferidos na `main`. | Validação real do GitHub Pages e do fluxo no navegador ainda não confirmada; acesso automatizado ao domínio falhou. |
 
-| 13/11/2026 | ISA-009: adicionados CTA 'Comprar', seleção de destaque no painel e seção Home, sem novo catálogo. | Migração Supabase `liberty_home_featured_products` aplicada com sucesso; campo `featured=false` e view `security_invoker=true` verificados; testes sintáticos e simulação de quatro cards/nenhum destaque passaram. | Código em branch `feat/destaques-home-isa-20261113`; registrar PR/merge e conferir deploy real. |
+| 13/11/2026 | ISA-009: CTA 'Comprar', seleção de destaque no painel e seção Home incorporados à `main`, sem novo catálogo. | [PR #6](https://github.com/rdamatheus/LibertyHaul/pull/6) mesclada (commit `08e8318`); migração Supabase `liberty_home_featured_products` aplicada e verificada; código relido na `main`; JS sintaticamente válido e simulação de Home com 4/0 cards aprovada. | Domínio `libertyhaul.com.br` não acessível nas consultas externas, portanto deploy e navegação reais ainda não validados. Nenhum produto marcado como destaque automaticamente. |
 
 ## Modelo de registro novo
 
