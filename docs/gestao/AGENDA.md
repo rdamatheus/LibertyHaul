@@ -13,7 +13,7 @@
 
 | ISA-008 | Alta | Páginas individuais e links Liberty compartilháveis | **Aguardando validação pública** | Tecnologia Liberty | Conferir PR/deploy e testar no domínio produto publicado, ID inválido, rascunho, botão afiliado e cópia no painel; sem mudar Supabase ou DNS. |
 
-| ISA-009 | Alta | Destaques na Home e botão Comprar | **Aguardando validação pública** | Tecnologia Liberty / Isabelle | [PR #6](https://github.com/rdamatheus/LibertyHaul/pull/6) mesclada; testar deploy, depois marcar produtos no painel e conferir Home → perfil → Comprar no domínio, incluindo rascunhos. |
+| ISA-009 | Alta | Destaques na Home e botão Comprar | **4 destaques ativados; aguardando validação pública** | Tecnologia Liberty / Isabelle | Em 14/11 foram marcados 4 produtos existentes com imagens verificadas no bucket; conferir visualização real da Home → perfil → Comprar e comportamento em dispositivos móveis antes de concluir. |
 
 ## Backlog que NÃO é autorização de implementação
 
