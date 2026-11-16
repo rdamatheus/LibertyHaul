@@ -113,7 +113,7 @@
       const title = document.createElement('strong');
       title.textContent = product.title;
       const meta = document.createElement('small');
-      meta.textContent = product.platform + ' · ' + (product.published ? 'Publicado' : 'Rascunho') + (product.live_featured ? ' · Live' : '') + (product.featured ? ' · Destaque' : '');
+      meta.textContent = ({affiliate:'Afiliado',outsourced:'Terceirizado',owned:'Próprio'}[product.sale_mode] || 'Afiliado') + ' · ' + product.platform + ' · ' + (product.published ? 'Publicado' : 'Rascunho') + (product.live_featured ? ' · Live' : '') + (product.featured ? ' · Destaque' : '');
       info.append(title,meta);
       const actions = document.createElement('div');
       actions.className = 'product-actions';
@@ -145,6 +145,8 @@
     $('category').value = product.category || 'casa';
     $('platform').value = product.platform || 'Shopee';
     $('affiliate-url').value = product.affiliate_url || '';
+    $('source-url').value = product.source_url || '';
+    $('sale-mode').value = product.sale_mode || 'affiliate';
     $('published').checked = Boolean(product.published);
     $('live-featured').checked = Boolean(product.live_featured);
     $('featured').checked = Boolean(product.featured);
@@ -156,6 +158,7 @@
   function resetEditor() {
     editing = null;
     $('product-form').reset();
+    $('sale-mode').value = 'affiliate';
     $('editor-title').textContent = 'Novo produto';
     $('cancel-edit').hidden = true;
     $('photo-current').textContent = '';
@@ -181,8 +184,18 @@
     $('save-product').disabled = true;
     notice('Salvando produto...');
     try {
-      const url = new URL($('affiliate-url').value.trim());
-      if (url.protocol !== 'https:') throw new Error('O link de afiliado precisa começar com https://.');
+      const mode = $('sale-mode').value;
+      if (!['affiliate','outsourced','owned'].includes(mode)) throw new Error('Modalidade inválida.');
+      const parseHttps = (value, label) => {
+        if (!value.trim()) return null;
+        const parsed = new URL(value.trim());
+        if (parsed.protocol !== 'https:') throw new Error(label + ' precisa começar com https://.');
+        return parsed.href;
+      };
+      const affiliateUrl = parseHttps($('affiliate-url').value, 'O link de afiliado');
+      const sourceUrl = parseHttps($('source-url').value, 'O link original');
+      if (mode === 'affiliate' && $('published').checked && !affiliateUrl) throw new Error('Informe o link de afiliado para publicar.');
+      if (mode !== 'affiliate' && $('published').checked) throw new Error('Somente afiliados podem ser publicados nesta etapa.');
       const photo = $('photo').files[0];
       let imagePath = editing ? editing.image_path : null;
       if (photo) imagePath = await uploadImage(photo);
@@ -191,7 +204,9 @@
         description:$('description').value.trim(),
         category:$('category').value,
         platform:$('platform').value,
-        affiliate_url:url.toString(),
+        affiliate_url:affiliateUrl,
+        source_url:sourceUrl,
+        sale_mode:mode,
         image_path:imagePath || null,
         published:$('published').checked,
         live_featured:$('live-featured').checked,
@@ -211,11 +226,13 @@
     } catch (error) { notice(error.message || 'Não foi possível salvar o produto.',true); }
     finally {busy=false;$('save-product').disabled=false;}
   }
+  function safeHttpsAffiliate(value) { try { return new URL(value).protocol === 'https:'; } catch (_) { return false; } }
   async function togglePublished(product) {
     if (busy) return;
     busy=true;
     notice('Atualizando...');
     try {
+      if (!product.published && (product.sale_mode !== 'affiliate' || !safeHttpsAffiliate(product.affiliate_url))) throw new Error('Somente afiliados com link HTTPS podem ser publicados.');
       const result = await http('/rest/v1/liberty_products?id=eq.'+encodeURIComponent(product.id), {
         method:'PATCH',
         headers:{'Content-Type':'application/json',Prefer:'return=representation'},
