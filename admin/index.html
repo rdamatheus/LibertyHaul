@@ -55,8 +55,13 @@
             <div><label for="category">Categoria</label><select id="category" name="category" required><option value="beleza">Beleza</option><option value="casa">Casa</option><option value="tech">Tecnologia</option><option value="estilo">Estilo</option></select></div>
             <div><label for="platform">Marketplace</label><select id="platform" name="platform" required><option value="Shopee">Shopee</option><option value="Mercado Livre">Mercado Livre</option><option value="Amazon">Amazon</option><option value="Outra plataforma">Outra plataforma</option></select></div>
           </div>
+          <label for="sale-mode">Modalidade comercial</label>
+          <select id="sale-mode" name="sale_mode" required><option value="affiliate">Afiliado</option><option value="outsourced">Terceirizado (preparação)</option><option value="owned">Produto próprio (preparação)</option></select>
+          <p class="hint">Apenas a modalidade afiliado está habilitada para publicação. Outras modalidades ficam como rascunho até implantação do fluxo comercial.</p>
+          <label for="source-url">Link original do anúncio (HTTPS, opcional)</label>
+          <input id="source-url" name="source_url" type="url" pattern="https://.*" placeholder="https://...">
           <label for="affiliate-url">Link de afiliado (HTTPS)</label>
-          <input id="affiliate-url" name="affiliate_url" type="url" required pattern="https://.*" placeholder="https://...">
+          <input id="affiliate-url" name="affiliate_url" type="url" pattern="https://.*" placeholder="https://...">
           <label for="photo">Foto do produto (JPEG, PNG ou WebP; até 5 MB)</label>
           <input id="photo" name="photo" type="file" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp">
           <p id="photo-current" class="hint"></p>
